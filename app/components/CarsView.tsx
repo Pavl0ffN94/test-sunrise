@@ -3,21 +3,15 @@
 import React, {useEffect, useState} from 'react';
 
 import {
-  Table,
-  Thead,
-  Tbody,
-  Tr,
-  Th,
-  Td,
-  TableCaption,
   Spinner,
   Box,
   Button,
   IconButton,
   Flex,
   Text,
-  HStack,
   Heading,
+  Grid,
+  GridItem,
 } from '@chakra-ui/react';
 
 import {PageButtons} from './PageButton';
@@ -26,36 +20,22 @@ import {CarCard} from './CarCard';
 
 export const CarsView: React.FC = () => {
   const [page, setPage] = useState(1);
-  const limit = 5;
+  console.log(page);
 
-  const {error, isLoading, data} = useGetAllCarsQuery({page});
+  const {error, isLoading, data} = useGetAllCarsQuery(page);
 
   if (isLoading) return <Spinner />;
   if (error) return <div>Произошла ошибка загрузки</div>;
-  console.log(page);
 
-  const totalPages = Math.ceil(data.total / limit);
+  const totalPages = data?.pages;
 
   return (
     <Box>
-      <Heading as='h2' size='lg' mb={4}>
-        Список пользователей
-      </Heading>
-      <Table variant='simple'>
-        <Thead>
-          <Tr>
-            <Th>ID</Th>
-            <Th>Имя</Th>
-            <Th>Роль</Th>
-            <Th>Время создания</Th>
-            <Th>Действия</Th>
-          </Tr>
-        </Thead>
-        <Tbody>
-          {data &&
-            data.list.map(car => (
+      <Grid templateColumns='repeat(3, 1fr)' gridTemplateRows='repeat(3, 1fr)' gap={3}>
+        {data &&
+          data.list.map(car => (
+            <GridItem key={car.id} colSpan={1} rowSpan={1}>
               <CarCard
-                key={car.id}
                 brand={car.brand}
                 image={car.image}
                 model={car.model}
@@ -63,9 +43,10 @@ export const CarsView: React.FC = () => {
                 price={car.price}
                 tarif={car.tarif}
               />
-            ))}
-        </Tbody>
-      </Table>
+            </GridItem>
+          ))}
+      </Grid>
+
       <Flex mt={4} justify='center'>
         <PageButtons page={page} totalPages={totalPages} setPage={setPage} />
       </Flex>

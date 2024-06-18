@@ -4,6 +4,6 @@ export interface ICar {
   model: string;
   number: string;
   price: number;
-  image: string;
+  image: string | null;
   tarif: string[] | [];
 }

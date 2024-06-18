@@ -1,6 +1,6 @@
 'use client';
 
-import {store} from '@/store';
+import store from '@/store/store';
 import {ChakraProvider} from '@chakra-ui/react';
 import {Provider} from 'react-redux';
 
