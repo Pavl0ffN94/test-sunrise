@@ -8,10 +8,12 @@ export interface FilterResponse {
   models: {
     name: string;
     type: string;
-    values: {
-      brand: string;
-      models: string[];
-    }[];
+    values: [
+      {
+        brand: string;
+        models: string[];
+      },
+    ];
   };
   tarif: {
     name: string;

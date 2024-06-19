@@ -10,3 +10,5 @@ export interface FiltersState {
   model: string[];
   tarif: string[];
 }
+
+export type FilterType = 'brand' | 'model' | 'tariff';

@@ -4,7 +4,7 @@ import React from 'react';
 
 import {ICar} from '@/types';
 
-export const CarCard: React.FC<Omit<ICar, 'id'>> = ({
+export const CarsCard: React.FC<Omit<ICar, 'id'>> = ({
   brand,
   model,
   number,

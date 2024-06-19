@@ -3,7 +3,7 @@ import {Button, HStack} from '@chakra-ui/react';
 
 interface PageButtonsProps {
   page: number;
-  totalPages: number;
+  totalPages: number | undefined;
   setPage: (page: number) => void;
 }
 
@@ -21,18 +21,21 @@ const PageButtonsImpl: React.FC<PageButtonsProps> = ({page, totalPages, setPage}
   };
 
   const renderPageButtons = () => {
-    const buttons = [];
-    for (let i = 1; i <= totalPages; i++) {
-      buttons.push(
-        <Button
-          key={i}
-          onClick={() => setPage(i)}
-          colorScheme={page === i ? 'blue' : 'gray'}>
-          {i}
-        </Button>,
-      );
+    if (typeof totalPages !== undefined) {
+      const buttons = [];
+      for (let i = 1; i <= totalPages; i++) {
+        buttons.push(
+          <Button
+            key={i}
+            onClick={() => setPage(i)}
+            colorScheme={page === i ? 'blue' : 'gray'}>
+            {i}
+          </Button>,
+        );
+      }
+      return buttons;
     }
-    return buttons;
+    return <h1>eror</h1>;
   };
 
   return (

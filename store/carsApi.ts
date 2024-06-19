@@ -1,4 +1,4 @@
-import {ICar, IResponseData} from '@/types';
+import {FilterParams, FilterResponse, ICar, IResponseData} from '@/types';
 import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react';
 
 export const carsApi = createApi({

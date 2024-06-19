@@ -1,4 +1,5 @@
 export * from './dataApi';
 export * from './cars';
-export * from './filerResponse';
+export * from './filterResponse';
 export * from './filter';
+export * from './checkFilter';

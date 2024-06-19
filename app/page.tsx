@@ -3,7 +3,7 @@ import styles from './page.module.css';
 
 import {PageButtons} from './components/PageButton';
 import {CarsView} from './components/CarsView';
-import {FilterComponent} from './components/FilterComponents';
+import {FilterComponent} from './components/FilterComponent';
 
 export default function Home() {
   return (
