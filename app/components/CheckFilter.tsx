@@ -20,7 +20,7 @@ export const CheckFilterImpl: React.FC<ICheckFilter> = ({
               <Checkbox
                 size='lg'
                 colorScheme='blue'
-                isChecked={selectedFilters.brand.includes(brand)}
+                isChecked={selectedFilters?.brand?.includes(brand)}
                 onChange={() => handleChange('brand', brand)}>
                 <Text>{brand}</Text>
               </Checkbox>
@@ -36,7 +36,7 @@ export const CheckFilterImpl: React.FC<ICheckFilter> = ({
                 <Checkbox
                   size='lg'
                   colorScheme='blue'
-                  isChecked={selectedFilters.model.includes(model)}
+                  isChecked={selectedFilters?.model?.includes(model)}
                   onChange={() => handleChange('model', model)}>
                   <Text>
                     {brand.brand} - {model}
@@ -53,8 +53,8 @@ export const CheckFilterImpl: React.FC<ICheckFilter> = ({
               <Checkbox
                 size='lg'
                 colorScheme='blue'
-                isChecked={selectedFilters.tariff.includes(tarif[1])}
-                onChange={() => handleChange('tariff', tarif[1])}>
+                isChecked={selectedFilters?.tarif?.includes(tarif[1])}
+                onChange={() => handleChange('tarif', tarif[1])}>
                 <Text>{tarif[1]}</Text>
               </Checkbox>
             </Box>

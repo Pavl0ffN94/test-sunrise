@@ -1,22 +1,26 @@
 import React, {memo} from 'react';
 import {Button, HStack} from '@chakra-ui/react';
+import {useDispatch, useSelector} from 'react-redux';
+import {selectPage} from '@/store';
+import {decrementPage, incrementPage, setPage} from '@/store/pageSlice';
 
 interface PageButtonsProps {
-  page: number;
   totalPages: number | undefined;
-  setPage: (page: number) => void;
 }
 
-const PageButtonsImpl: React.FC<PageButtonsProps> = ({page, totalPages, setPage}) => {
+const PageButtonsImpl: React.FC<PageButtonsProps> = ({totalPages}) => {
+  const page = useSelector(selectPage);
+  const dispatch = useDispatch();
+
   const handlePreviousPage = () => {
-    if (page > 1) {
-      setPage(page - 1);
+    if (page.currentPage > 1) {
+      dispatch(decrementPage());
     }
   };
 
   const handleNextPage = () => {
-    if (page < totalPages) {
-      setPage(page + 1);
+    if (page.currentPage < totalPages) {
+      dispatch(incrementPage());
     }
   };
 
@@ -27,8 +31,8 @@ const PageButtonsImpl: React.FC<PageButtonsProps> = ({page, totalPages, setPage}
         buttons.push(
           <Button
             key={i}
-            onClick={() => setPage(i)}
-            colorScheme={page === i ? 'blue' : 'gray'}>
+            onClick={() => dispatch(setPage(i))}
+            colorScheme={page.currentPage === i ? 'blue' : 'gray'}>
             {i}
           </Button>,
         );
@@ -44,9 +48,9 @@ const PageButtonsImpl: React.FC<PageButtonsProps> = ({page, totalPages, setPage}
         onClick={handlePreviousPage}
         _hover={{}}
         _disabled={{opacity: 0.9, cursor: 'not-allowed', bg: 'gray'}}
-        disabled={page === 1}
-        bg={page === 1 ? 'grey' : 'blue.500'}
-        color={page === 1 ? '#fff' : 'white'}>
+        disabled={page.currentPage === 1}
+        bg={page.currentPage === 1 ? 'grey' : 'blue.500'}
+        color={page.currentPage === 1 ? '#fff' : 'white'}>
         Преведущая
       </Button>
       {renderPageButtons()}
@@ -54,9 +58,9 @@ const PageButtonsImpl: React.FC<PageButtonsProps> = ({page, totalPages, setPage}
         onClick={handleNextPage}
         _hover={{}}
         _disabled={{opacity: 0.9, cursor: 'not-allowed', bg: 'gray'}}
-        disabled={page === totalPages}
-        bg={page === totalPages ? 'grey' : 'blue.500'}
-        color={page === totalPages ? '#fff' : 'white'}>
+        disabled={page.currentPage === totalPages}
+        bg={page.currentPage === totalPages ? 'grey' : 'blue.500'}
+        color={page.currentPage === totalPages ? '#fff' : 'white'}>
         Следующая
       </Button>
     </HStack>

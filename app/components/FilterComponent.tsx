@@ -1,11 +1,9 @@
 'use client';
 
-import React, {useState, useEffect} from 'react';
+import React, {useCallback} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import {
-  selectBrandFilter,
-  selectModelFilter,
-  selectTarifFilter,
+  selectCombinedFilters,
   setBrandFilter,
   setModelFilter,
   setTarifFilter,
@@ -25,43 +23,43 @@ import {
   DrawerBody,
 } from '@chakra-ui/react';
 import {CheckFilter} from './CheckFilter';
+
 import {FilterType} from '@/types';
 
 export const FilterComponent: React.FC = () => {
   const dispatch = useDispatch();
   const {data, error, isLoading, isFetching} = useGetFiltersQuery();
 
-  const selectedBrands = useSelector(selectBrandFilter);
-  const selectedModels = useSelector(selectModelFilter);
-  const selectedTariffs = useSelector(selectTarifFilter);
-
-  const [selectedFilters, setSelectedFilters] = useState({
-    brand: selectedBrands,
-    model: selectedModels,
-    tariff: selectedTariffs,
-  });
-
-  const handleChange = (type: FilterType, value: string) => {
-    setSelectedFilters(prev => {
-      const currentValues = prev[type] || [];
-      return {
-        ...prev,
-        [type]: currentValues.includes(value)
-          ? currentValues.filter(item => item !== value)
-          : [...currentValues, value],
-      };
-    });
-  };
-
-  const applyFilters = () => {
-    dispatch(setBrandFilter(selectedFilters.brand));
-    dispatch(setModelFilter(selectedFilters.model));
-    dispatch(setTarifFilter(selectedFilters.tariff));
-  };
+  const selectedFilters = useSelector(selectCombinedFilters);
 
   const {isOpen, onOpen, onClose} = useDisclosure();
 
-  console.log(selectedFilters);
+  const handleChange = useCallback(
+    (type: FilterType, value: string) => {
+      let updatedValues;
+      switch (type) {
+        case 'brand':
+          updatedValues = selectedFilters.brand.includes(value)
+            ? selectedFilters.brand.filter(item => item !== value)
+            : [...selectedFilters.brand, value];
+          dispatch(setBrandFilter(updatedValues));
+          break;
+        case 'model':
+          updatedValues = selectedFilters.model.includes(value)
+            ? selectedFilters.model.filter(item => item !== value)
+            : [...selectedFilters.model, value];
+          dispatch(setModelFilter(updatedValues));
+          break;
+        case 'tarif':
+          updatedValues = selectedFilters.tarif.includes(value)
+            ? selectedFilters.tarif.filter(item => item !== value)
+            : [...selectedFilters.tarif, value];
+          dispatch(setTarifFilter(updatedValues));
+          break;
+      }
+    },
+    [selectedFilters, dispatch],
+  );
 
   if (isLoading || isFetching) return <Spinner />;
 
@@ -95,14 +93,9 @@ export const FilterComponent: React.FC = () => {
 
           <DrawerFooter borderTopWidth='1px'>
             <Button variant='outline' mr={3} onClick={onClose}>
-              Вернутся
+              Вернуться
             </Button>
-            <Button
-              colorScheme='blue'
-              onClick={() => {
-                applyFilters();
-                onClose();
-              }}>
+            <Button colorScheme='blue' onClick={onClose}>
               Применить
             </Button>
           </DrawerFooter>

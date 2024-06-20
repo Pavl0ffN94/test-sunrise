@@ -1,28 +1,41 @@
 'use client';
 
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useSelector} from 'react-redux';
-import {Spinner, Box, Flex, Grid, GridItem} from '@chakra-ui/react';
+import {Spinner, Box, Flex, Grid, GridItem, Text} from '@chakra-ui/react';
 import {PageButtons} from './PageButton';
-import {selectFilteredCars, useGetAllCarsQuery} from '@/store';
+import {
+  selectCombinedFilters,
+  selectPage,
+  useGetAllCarsQuery,
+  useGetFilteredCarsQuery,
+} from '@/store';
 import {CarsCard} from './CarsCard';
 
 export const CarsView: React.FC = () => {
-  const [page, setPage] = useState(1);
+  const page = useSelector(selectPage);
 
-  const {error, isLoading, data} = useGetAllCarsQuery(page);
-  const filteredCars = useSelector(selectFilteredCars);
+  const selectedFilters = useSelector(selectCombinedFilters);
 
-  if (isLoading) return <Spinner />;
-  if (error) return <div>Произошла ошибка загрузки</div>;
+  const {
+    error,
+    isLoading,
+    data: allCars,
+    isFetching,
+  } = useGetAllCarsQuery(page.currentPage);
 
-  const carsToDisplay = filteredCars.length > 0 ? filteredCars : data?.list || [];
-  const totalPages = data?.pages;
+  const {data: filteredCars} = useGetFilteredCarsQuery({...selectedFilters, page});
+  console.log(filteredCars);
+
+  if (isLoading && isFetching) return <Spinner />;
+  if (error) return <Text>Произошла ошибка загрузки</Text>;
+
+  const totalPages = filteredCars ? filteredCars.pages : allCars?.pages;
 
   return (
     <Box>
       <Grid templateColumns='repeat(3, 1fr)' gridTemplateRows='repeat(3, 1fr)' gap={3}>
-        {carsToDisplay.map(car => (
+        {allCars.list.map(car => (
           <GridItem key={car.id} colSpan={1} rowSpan={1}>
             <CarsCard
               brand={car.brand}
@@ -37,7 +50,7 @@ export const CarsView: React.FC = () => {
       </Grid>
 
       <Flex mt={4} justify='center'>
-        <PageButtons page={page} totalPages={totalPages} setPage={setPage} />
+        <PageButtons totalPages={totalPages} />
       </Flex>
     </Box>
   );

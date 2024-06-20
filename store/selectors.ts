@@ -1,21 +1,17 @@
 import {createSelector} from '@reduxjs/toolkit';
 import {RootState} from './store';
 
-export const selectBrandFilter = (state: RootState) => state.filters.brand || [];
-export const selectModelFilter = (state: RootState) => state.filters.model || [];
-export const selectTarifFilter = (state: RootState) => state.filters.tarif || [];
+export const selectFiltersBrand = (state: RootState) => state.filters.brand;
+export const selectFiltersModel = (state: RootState) => state.filters.model;
+export const selectFiltersTarif = (state: RootState) => state.filters.tarif;
+export const selectPage = (state: RootState) => state.page;
 
-export const selectAllCars = (state: RootState) =>
-  state.carsApi.queries['getCars(undefined)']?.data || [];
-
-export const selectFilteredCars = createSelector(
-  [selectAllCars, selectBrandFilter, selectModelFilter, selectTarifFilter],
-  (cars, selectedBrands, selectedModels, selectedTarifs) => {
-    return cars.filter(
-      car =>
-        (selectedBrands.length === 0 || selectedBrands.includes(car.brand)) &&
-        (selectedModels.length === 0 || selectedModels.includes(car.model)) &&
-        (selectedTarifs.length === 0 || selectedTarifs.includes(car.tarif)),
-    );
-  },
+export const selectCombinedFilters = createSelector(
+  [selectFiltersBrand, selectFiltersModel, selectFiltersTarif, selectPage],
+  (brand, model, tarif, page) => ({
+    brand: brand || [],
+    model: model || [],
+    tarif: tarif || [],
+    page: page.currentPage || 1,
+  }),
 );

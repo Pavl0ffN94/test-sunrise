@@ -5,9 +5,9 @@ export interface ICheckFilter {
   selectedFilters: {
     brand: string[];
     model: string[];
-    tariff: string[];
+    tarif: string[];
   };
-  handleChange: (type: 'brand' | 'model' | 'tariff', value: string) => void;
+  handleChange: (type: 'brand' | 'model' | 'tarif', value: string) => void;
 }
 
 export type IFormatingTarif = Array<[string, string]>;

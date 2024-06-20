@@ -1,8 +1,10 @@
+import {IPage} from '@/store';
+
 export interface FilterParams {
   brand: string[];
   model: string[];
   tarif: string[];
-  page: number;
+  page: IPage;
 }
 
 export interface FiltersState {
@@ -11,4 +13,4 @@ export interface FiltersState {
   tarif: string[];
 }
 
-export type FilterType = 'brand' | 'model' | 'tariff';
+export type FilterType = 'brand' | 'model' | 'tarif';
