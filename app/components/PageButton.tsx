@@ -43,7 +43,7 @@ const PageButtonsImpl: React.FC<PageButtonsProps> = ({totalPages}) => {
   };
 
   return (
-    <HStack spacing={2}>
+    <HStack spacing={2} justify='center'>
       <Button
         onClick={handlePreviousPage}
         _hover={{}}

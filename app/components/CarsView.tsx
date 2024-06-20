@@ -11,47 +11,43 @@ import {
   useGetFilteredCarsQuery,
 } from '@/store';
 import {CarsCard} from './CarsCard';
+import {CarInfoView} from './CarInfoView';
 
 export const CarsView: React.FC = () => {
   const page = useSelector(selectPage);
-
   const selectedFilters = useSelector(selectCombinedFilters);
+  const {brand, model, tarif} = selectedFilters;
+  const hasFilters = [brand, model, tarif].some(arr => arr.length > 0);
 
   const {
-    error,
-    isLoading,
+    error: allCarsError,
+    isLoading: isLoadingAllCars,
     data: allCars,
-    isFetching,
   } = useGetAllCarsQuery(page.currentPage);
 
-  const {data: filteredCars} = useGetFilteredCarsQuery({...selectedFilters, page});
-  console.log(filteredCars);
+  const {
+    data: filteredCars,
+    isFetching: isFetchingFilteredCars,
+    error: filteredCarsError,
+  } = useGetFilteredCarsQuery({...selectedFilters, page});
 
-  if (isLoading && isFetching) return <Spinner />;
-  if (error) return <Text>Произошла ошибка загрузки</Text>;
+  const [totalPages, setTotalPages] = useState(1);
 
-  const totalPages = filteredCars ? filteredCars.pages : allCars?.pages;
+  useEffect(() => {
+    if (hasFilters && filteredCars) {
+      setTotalPages(filteredCars.pages);
+    } else if (!hasFilters && allCars) {
+      setTotalPages(allCars.pages);
+    }
+  }, [hasFilters, filteredCars, allCars]);
+
+  if (isLoadingAllCars || isFetchingFilteredCars) return <Spinner />;
+  if (allCarsError || filteredCarsError) return <Text>Произошла ошибка загрузки</Text>;
 
   return (
-    <Box>
-      <Grid templateColumns='repeat(3, 1fr)' gridTemplateRows='repeat(3, 1fr)' gap={3}>
-        {allCars.list.map(car => (
-          <GridItem key={car.id} colSpan={1} rowSpan={1}>
-            <CarsCard
-              brand={car.brand}
-              image={car.image}
-              model={car.model}
-              number={car.number}
-              price={car.price}
-              tarif={car.tarif}
-            />
-          </GridItem>
-        ))}
-      </Grid>
-
-      <Flex mt={4} justify='center'>
-        <PageButtons totalPages={totalPages} />
-      </Flex>
-    </Box>
+    <div>
+      <CarInfoView data={hasFilters ? filteredCars : allCars} />
+      <PageButtons totalPages={totalPages} />
+    </div>
   );
 };
