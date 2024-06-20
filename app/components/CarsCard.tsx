@@ -29,7 +29,7 @@ export const CarsCard: React.FC<Omit<ICar, 'id'>> = ({
             w='275px'
             h='150px'
             objectFit='cover'
-            src='https://www.autolist.com/assets/listings/sedan_default.jpg'
+            src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRwAeBFiDf4QBNr8Z7oO6OCXEU_CqCRnIjtEg&s'
             borderRadius='lg'
             alt='Default img'
           />

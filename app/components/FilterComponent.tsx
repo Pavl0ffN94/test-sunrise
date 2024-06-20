@@ -41,14 +41,6 @@ export const FilterComponent: React.FC = () => {
     tariff: selectedTariffs,
   });
 
-  useEffect(() => {
-    setSelectedFilters({
-      brand: selectedBrands,
-      model: selectedModels,
-      tariff: selectedTariffs,
-    });
-  }, [selectedBrands, selectedModels, selectedTariffs]);
-
   const handleChange = (type: FilterType, value: string) => {
     setSelectedFilters(prev => {
       const currentValues = prev[type] || [];
@@ -73,7 +65,7 @@ export const FilterComponent: React.FC = () => {
 
   if (isLoading || isFetching) return <Spinner />;
 
-  if (error) return <Box>Error loading filters</Box>;
+  if (error) return <Box>Ошибка загрузки фильтров</Box>;
 
   return (
     <>
@@ -103,7 +95,7 @@ export const FilterComponent: React.FC = () => {
 
           <DrawerFooter borderTopWidth='1px'>
             <Button variant='outline' mr={3} onClick={onClose}>
-              Cancel
+              Вернутся
             </Button>
             <Button
               colorScheme='blue'
@@ -111,7 +103,7 @@ export const FilterComponent: React.FC = () => {
                 applyFilters();
                 onClose();
               }}>
-              Submit
+              Применить
             </Button>
           </DrawerFooter>
         </DrawerContent>
