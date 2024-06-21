@@ -1,5 +1,5 @@
 import {buildQueryParams} from '@/helpers';
-import {FilterParams, FilterResponse, ICar, IResponseData} from '@/types';
+import {FilterParams, FilterResponse, ICar, IOneCar, IResponseData} from '@/types';
 import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react';
 import {IPage} from './pageSlice';
 
@@ -21,7 +21,15 @@ export const carsApi = createApi({
         };
       },
     }),
+    getOneCar: builder.query<IOneCar, number>({
+      query: id => `?w=catalog-car&id=${id}`,
+    }),
   }),
 });
 
-export const {useGetFiltersQuery, useGetFilteredCarsQuery, useGetAllCarsQuery} = carsApi;
+export const {
+  useGetFiltersQuery,
+  useGetFilteredCarsQuery,
+  useGetAllCarsQuery,
+  useGetOneCarQuery,
+} = carsApi;

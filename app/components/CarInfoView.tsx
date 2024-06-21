@@ -21,6 +21,7 @@ export const CarInfoView: React.FC<ICarInfoView> = ({data}) => {
             number={car.number}
             price={car.price}
             tarif={car.tarif}
+            id={car.id}
           />
         </GridItem>
       ))}

@@ -7,3 +7,20 @@ export interface ICar {
   image: string | null;
   tarif: string[] | [];
 }
+
+export interface Iimage {
+  id: string;
+  image: string;
+}
+
+export interface IOneCar {
+  result: number;
+  item: {
+    brand: string;
+    model: string;
+    id: number;
+    price: number;
+    images: Iimage[];
+    tarif: string[];
+  };
+}
