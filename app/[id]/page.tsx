@@ -1,9 +1,10 @@
 'use client';
 
 import {useGetOneCarQuery} from '@/store';
-import {Badge, Box, Image, SimpleGrid, Spinner, Text} from '@chakra-ui/react';
+import {Badge, Box, Button, Image, SimpleGrid, Spinner, Text} from '@chakra-ui/react';
 import {useEffect} from 'react';
 import {SliderComponent} from '../components/Slider';
+import Link from 'next/link';
 
 type Props = {
   params: {
@@ -20,6 +21,9 @@ export default function CarPage({params: {id}}: Props) {
   if (status === 'fulfilled' && data !== undefined) {
     return (
       <Box maxW='7xl' mx='auto' p={4}>
+        <Button>
+          <Link href='/'>Назат</Link>
+        </Button>
         <Text fontSize='2xl' fontWeight='bold'>
           {data.item.brand} {data.item.model}
         </Text>

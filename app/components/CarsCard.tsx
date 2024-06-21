@@ -14,8 +14,6 @@ export const CarsCard: React.FC<ICar> = ({
   tarif,
   id,
 }) => {
-  console.log(id);
-
   return (
     <Link href={`/${id}`}>
       <Box w='xs' p={2}>
