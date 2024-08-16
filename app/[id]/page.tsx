@@ -3,8 +3,9 @@
 import {useGetOneCarQuery} from '@/store';
 import {Badge, Box, Button, Image, SimpleGrid, Spinner, Text} from '@chakra-ui/react';
 import {useEffect} from 'react';
-import {SliderComponent} from '../components/Slider';
+
 import Link from 'next/link';
+import {SliderComponent} from '@/components/Slider';
 
 type Props = {
   params: {

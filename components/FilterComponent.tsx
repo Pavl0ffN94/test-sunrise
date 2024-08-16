@@ -26,7 +26,7 @@ import {CheckFilter} from './CheckFilter';
 
 import {FilterType} from '@/types';
 
-export const FilterComponent: React.FC = () => {
+export const FilterComponent = () => {
   const dispatch = useDispatch();
   const {data, error, isLoading, isFetching} = useGetFiltersQuery();
 

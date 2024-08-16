@@ -2,11 +2,7 @@ import {FilterResponse, ICheckFilter, IFormatingTarif} from '@/types';
 import {Box, Checkbox, HStack, Tag, Text, VStack} from '@chakra-ui/react';
 import React, {memo} from 'react';
 
-export const CheckFilterImpl: React.FC<ICheckFilter> = ({
-  data,
-  selectedFilters,
-  handleChange,
-}) => {
+export const CheckFilterImpl = ({data, selectedFilters, handleChange}: ICheckFilter) => {
   if (data) {
     const {brands, models, tarif} = data;
     const formatingTarif: IFormatingTarif = Object.entries(tarif.values);

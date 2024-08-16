@@ -1,9 +1,6 @@
 import Image from 'next/image';
 import styles from './page.module.css';
-
-import {PageButtons} from './components/PageButton';
-import {CarsView} from './components/CarsView';
-import {FilterComponent} from './components/FilterComponent';
+import {CarsView, FilterComponent} from '@/components';
 
 export default function Home() {
   return (

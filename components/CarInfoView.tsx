@@ -6,7 +6,7 @@ interface ICarInfoView {
   data: IResponseData<ICar>;
 }
 
-export const CarInfoView: React.FC<ICarInfoView> = ({data}) => {
+export const CarInfoView = ({data}: ICarInfoView) => {
   if (data.list.length === 0) {
     return <Heading>Уупс, кажется ничего не найдено, попробуйте другие фильтры</Heading>;
   }

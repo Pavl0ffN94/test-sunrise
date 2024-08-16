@@ -1,9 +1,11 @@
+'use client';
+
 import {Iimage} from '@/types';
 import {Box, Flex, Image, Text, Button} from '@chakra-ui/react';
 import {useState} from 'react';
 
 export const SliderComponent = ({images}: {images: Iimage[]}) => {
-  const [currentSlide, setCurrentSlide] = useState(0);
+  const [currentSlide, setCurrentSlide] = useState<number>(0);
 
   const nextSlide = () => {
     setCurrentSlide(prev => (prev === images.length - 1 ? 0 : prev + 1));

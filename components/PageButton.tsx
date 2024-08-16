@@ -8,7 +8,7 @@ interface PageButtonsProps {
   totalPages: number | undefined;
 }
 
-const PageButtonsImpl: React.FC<PageButtonsProps> = ({totalPages}) => {
+const PageButtonsImpl = ({totalPages}: PageButtonsProps) => {
   const page = useSelector(selectPage);
   const dispatch = useDispatch();
 

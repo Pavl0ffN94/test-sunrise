@@ -5,15 +5,7 @@ import React from 'react';
 import {ICar} from '@/types';
 import Link from 'next/link';
 
-export const CarsCard: React.FC<ICar> = ({
-  brand,
-  model,
-  number,
-  price,
-  image,
-  tarif,
-  id,
-}) => {
+export const CarsCard = ({brand, model, number, price, image, tarif, id}: ICar) => {
   return (
     <Link href={`/${id}`}>
       <Box w='xs' p={2}>

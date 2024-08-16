@@ -13,7 +13,7 @@ import {
 import {CarsCard} from './CarsCard';
 import {CarInfoView} from './CarInfoView';
 
-export const CarsView: React.FC = () => {
+export const CarsView = () => {
   const page = useSelector(selectPage);
   const selectedFilters = useSelector(selectCombinedFilters);
   const {brand, model, tarif} = selectedFilters;
